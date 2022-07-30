@@ -1,0 +1,11 @@
+COMO ESCOLHER POR ONDE COMEÇAR?
+
+R. Respondendo a pergunta abaixo.
+
+QUAL ou QUAIS TABELAS não possuem NENHUMA CHAVE ESTRANGEIRA?
+
+R. Nesse caso, só tem uma: customers.
+
+E POR QUE COMEÇAR ASSIM?
+
+R. Porque se ela não possui nenhuma chave estrangeira, ela não depende de nenhuma outra tabela para existir.
