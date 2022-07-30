@@ -1,8 +1,6 @@
 ==========================================================================================================================
 TABELA: customers
 ==========================================================================================================================
-QUERY: 
-
 CREATE TABLE customers (
 	id SERIAL PRIMARY KEY, 
 	"fullName" VARCHAR(70) NOT NULL, 
@@ -10,13 +8,10 @@ CREATE TABLE customers (
 	email VARCHAR NOT NULL, 
 	password TEXT NOT NULL
 );
-
-
+==========================================================================================================================
 ==========================================================================================================================
 TABELA: bankAccount
 ==========================================================================================================================
-QUERY:
-
 CREATE TABLE "bankAccount" (
 	id SERIAL PRIMARY KEY, 
 	"customerId" INTEGER NOT NULL REFERENCES customers(id), 
@@ -25,15 +20,11 @@ CREATE TABLE "bankAccount" (
 	"openDate" DATE NOT NULL DEFAULT NOW(), 
 	"closeDate" DATE
 );
-
-
+==========================================================================================================================
 ==========================================================================================================================
 TABELA: transactions
 ==========================================================================================================================
-QUERY:
-
 CREATE TYPE "transactionType" AS ENUM ('deposit', 'withdraw');
-
 
 CREATE TABLE transactions (
 	id SERIAL PRIMARY KEY, 
@@ -44,36 +35,66 @@ CREATE TABLE transactions (
 	description TEXT NOT NULL, 
 	canceled BOOLEAN NOT NULL DEFAULT false
 );
-
-
-
+==========================================================================================================================
 ==========================================================================================================================
 TABELA: creditCards
 ==========================================================================================================================
-QUERY:
-
-
+CREATE TABLE "creditCards" (
+	id SERIAL PRIMARY KEY, 
+	"bankAccountId" INTEGER NOT NULL REFERENCES "bankAccount"(id), 
+	name VARCHAR(30) NOT NULL, 
+	number VARCHAR(16) UNIQUE NOT NULL, 
+	"securityCode" INT NOT NULL, 
+	"expirationMonth" DATE NOT NULL, 
+	"expirationsYear" DATE NOT NULL, 
+	password VARCHAR NOT NULL, 
+	"limit" FLOAT NOT NULL
+);
+==========================================================================================================================
 ==========================================================================================================================
 TABELA: customerPhones
 ==========================================================================================================================
-QUERY:
+CREATE TYPE "CUSTOMER-PHONE-TYPE" AS ENUM ('landline', 'mobile');
 
+CREATE TABLE "customerPhones" (
+	id SERIAL PRIMARY KEY, 
+	"customerId" INTEGER NOT NULL REFERENCES customers(id), 
+	number VARCHAR(13) UNIQUE NOT NULL, 
+	type "CUSTOMER-PHONE-TYPE" NOT NULL DEFAULT 'mobile'
+);
+==========================================================================================================================
 ==========================================================================================================================
 TABELA: customerAddresses
 ==========================================================================================================================
-QUERY:
-
-
+CREATE TABLE "customerAddresses" (
+	id SERIAL PRIMARY KEY, 
+	"customerId" INTEGER UNIQUE NOT NULL REFERENCES customers(id), 
+	street TEXT NOT NULL, 
+	number INTEGER NOT NULL, 
+	complement TEXT NOT NULL, 
+	"postalCode" INTEGER NOT NULL, 
+	"cityId" INTEGER NOT NULL REFERENCES cities(id)
+);
+==========================================================================================================================
 ==========================================================================================================================
 TABELA: cities
 ==========================================================================================================================
-QUERY:
-
-
+CREATE TABLE cities (
+	id SERIAL PRIMARY KEY, 
+	name TEXT UNIQUE NOT NULL, 
+	"stateId" INTEGER NOT NULL REFERENCES states(id)
+);
+==========================================================================================================================
 ==========================================================================================================================
 TABELA: states
 ==========================================================================================================================
-QUERY:
+CREATE TABLE states (
+	id SERIAL PRIMARY KEY, 
+	name TEXT UNIQUE NOT NULL
+);
+==========================================================================================================================
+
+
 
 
 
